@@ -38,24 +38,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Dapatkan short SHA untuk tag unik
-      - name: Get short SHA
-        id: vars
-        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
       # Build Docker image (dengan dua tag: GHCR dan Docker Hub)
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/mfisya/belajar-cicd:latest \
-                       -t mfisya/cicd:latest \
-                       -t mfisya/cicd:${{ steps.vars.outputs.short_sha }} .
+          docker build -t ghcr.io/mfisya/belajar-cicd:latest 
 
       # Push image ke GHCR
       - name: Push to GHCR
         run: docker push ghcr.io/mfisya/belajar-cicd:latest
 
-      # Push image ke Docker Hub (latest & SHA tag)
+      # Push image ke Docker Hub
       - name: Push to Docker Hub
         run: |
           docker push mfisya/cicd:latest
-          docker push mfisya/cicd:${{ steps.vars.outputs.short_sha }}
