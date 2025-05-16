@@ -41,7 +41,7 @@ jobs:
       # Build Docker image (dengan dua tag: GHCR dan Docker Hub)
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/mfisya/belajar-cicd:latest 
+          docker build -t ghcr.io/mfisya/belajar-cicd:latest .
 
       # Push image ke GHCR
       - name: Push to GHCR
